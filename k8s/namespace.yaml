@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: file-storage-service
+  labels:
+    app.kubernetes.io/name: file-storage-service
+    app.kubernetes.io/managed-by: kubectl
