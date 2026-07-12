@@ -44,9 +44,13 @@ Java 21 · S3 / MinIO · PostgreSQL · CDN · Docker · Gradle · Flyway · Dock
 
 Organizado por **feature** en capas `domain -> application -> infrastructure`, con la regla de dependencia verificada por ArchUnit. La logica de negocio (dominio y casos de uso) no depende de framework ni de infraestructura; los adaptadores (web, persistencia, mensajeria) implementan puertos definidos por la aplicacion.
 
+## API
+
+Contexto `/file-storage-service`. `POST /api/v1/files` devuelve una **presigned URL** de subida; `POST /api/v1/files/{id}/complete` confirma la subida y dispara el post-proceso (miniatura); `GET /api/v1/files/{id}` devuelve el estado y las URLs de descarga.
+
 ## Estado
 
-🚧 En planificacion / arranque. El diseno detallado (epicas, historias y criterios de aceptacion) vive en el plan del portafolio.
+✅ Nucleo funcional implementado: presigned URLs (stub S3/MinIO), maquina de estados del archivo (PENDING→UPLOADED→PROCESSING→READY), post-proceso que genera una miniatura, y consulta con URLs de descarga. Persistencia JPA/PostgreSQL + migracion Flyway, tests (unit + Testcontainers). Capa siguiente: object store real (MinIO/S3), post-proceso **asincrono por eventos** (cola/worker) y entrega por CDN.
 
 ---
 
